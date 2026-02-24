@@ -47,8 +47,6 @@ class Tokenizer
                 $prev = $t;
                 continue;
             }
-
-            throw new \InvalidArgumentException("Invalid token: {$t}");
         }
 
         return $tokens;

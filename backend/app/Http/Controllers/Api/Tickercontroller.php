@@ -71,7 +71,7 @@ class TickerController
 
     /**
      ** DELETE /api/ticker/all
-     ** Delete all TickerItemsr and return success status
+     ** Delete all TickerItems and return success status
      **/
     public function destroyAll()
     {

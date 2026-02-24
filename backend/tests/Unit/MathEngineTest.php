@@ -2,11 +2,31 @@
 
 namespace Tests\Unit;
 
-use App\Math\MathEngine;
 use PHPUnit\Framework\TestCase;
+use App\Math\MathEngine;
 
-class MathTest extends TestCase
+class MathEngineTest extends TestCase
 {
+    /**
+     * Testing input of invalid operator
+     */
+    public function test_guard_invalid_input(): void
+    {
+        $me = app(MathEngine::class);
+        $expression = '4&4';
+        $this->expectException(\InvalidArgumentException::class);
+        $me->evaluate($expression);
+    }
+    /**
+     * Testing for finite input to formatter
+     */
+    public function test_formatter_invalid_input(): void
+    {
+        $me = app(MathEngine::class);
+        $expression = '10^1000';
+        $this->expectException(\InvalidArgumentException::class);
+        $me->evaluate($expression);
+    }
     /**
      * Simple one operator test
      */

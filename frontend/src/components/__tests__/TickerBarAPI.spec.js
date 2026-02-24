@@ -1,10 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import TickerBar from '../TickerBar.vue'
+import TickerBar from '@/components/TickerBar.vue'
 
 describe('TickerBar.fetchTickerData', () => {
   let fetchMock
-
   beforeEach(() => {
     fetchMock = vi.fn(async (url, opts) => {
       if (url === 'http://localhost:3500/api/ticker' && opts?.method === 'POST') {
@@ -68,7 +67,6 @@ describe('TickerBar.fetchTickerData', () => {
     ])
   })
 
-  // const res = await fetch(`http://localhost:3500/api/ticker/${id}`, {
   it('Delete one ticker item and update logs', async () => {
     const wrapper = mount(TickerBar)
     await wrapper.vm.deleteTickerItem('1')

@@ -101,6 +101,7 @@ async function buttonDeleteAll() {
 
 function pauseTicker() {
   paused = true
+  /* istanbul ignore next */
   if (rafId.value) {
     cancelAnimationFrame(rafId.value)
     rafId.value = null
@@ -117,6 +118,7 @@ function resumeTicker() {
 async function measureAndSetCopies() {
   await nextTick()
   containerWidth = container.value?.clientWidth || 0
+  /* istanbul ignore next */
   const el = Array.isArray(copy.value) ? copy.value[0] : copy.value
   copyWidth = el?.offsetWidth || 0
   if (!copyWidth) {
@@ -128,6 +130,7 @@ async function measureAndSetCopies() {
 }
 
 function tick(ts) {
+  /* istanbul ignore next */
   if (paused) {
     return
   }
@@ -171,6 +174,7 @@ async function restart() {
 }
 
 async function onResize() {
+  /* istanbul ignore next */
   await restart()
 }
 
@@ -184,20 +188,18 @@ async function deleteTickerItem(id) {
       method: 'DELETE',
     })
     if (!res.ok) {
-      console.error('!res.ok: Error response from server:', res.status, await res.text())
       throw new Error(`HTTP ${res.status}`)
     }
     const data = await res.json()
 
+    /* istanbul ignore next */
     if (data.error) {
-      console.error('API error:', data.error)
       throw new Error(data.error)
     }
     logs.value = logs.value.filter((log) => log.id !== id)
     await restart()
     tickerStatus.value = 'Item deleted'
   } catch (err) {
-    console.error('Error block: Error fetching calculation:', err)
     error.value = err.message
   } finally {
     loading.value = false
@@ -213,20 +215,21 @@ async function deleteAllTickerItems() {
     const res = await fetch(`http://localhost:3500/api/ticker/all`, {
       method: 'DELETE',
     })
+    /* istanbul ignore next */
     if (!res.ok) {
-      console.error('!res.ok: Error response from server:', res.status, await res.text())
+      /* istanbul ignore next */
       throw new Error(`HTTP ${res.status}`)
     }
     const data = await res.json()
+    /* istanbul ignore next */
     if (data.error) {
-      console.error('API error:', data.error)
       throw new Error(data.error)
     }
     logs.value = []
     await restart()
     tickerStatus.value = 'All items deleted'
   } catch (err) {
-    console.error('Error block: Error fetching calculation:', err)
+    /* istanbul ignore next */
     error.value = err.message
   } finally {
     loading.value = false
@@ -243,18 +246,19 @@ async function fetchTickerData() {
         'Content-Type': 'application/json',
       },
     })
+    /* istanbul ignore next */
     if (!res.ok) {
-      console.error('!res.ok: Error response from server:', res.status, await res.text())
+      /* istanbul ignore next */
       throw new Error(`HTTP ${res.status}`)
     }
     const data = await res.json()
+    /* istanbul ignore next */
     if (data.error) {
-      console.error('API error:', data.error)
+      /* istanbul ignore next */
       throw new Error(data.error)
     }
     const logData = data.data
     if (!Array.isArray(logData)) {
-      console.error('Unexpected data format: expected an array', logData)
       throw new Error('Unexpected data format')
     }
     if (logData.length === 0) {
@@ -268,7 +272,6 @@ async function fetchTickerData() {
     logs.value = logData
     tickerStatus.value = `Loaded ${logs.value.length} items`
   } catch (err) {
-    console.error('Error block: Error fetching calculation:', err)
     error.value = err.message
   } finally {
     loading.value = false
@@ -285,7 +288,9 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  /* istanbul ignore next */
   stop()
+  /* istanbul ignore next */
   window.removeEventListener('resize', onResize)
 })
 

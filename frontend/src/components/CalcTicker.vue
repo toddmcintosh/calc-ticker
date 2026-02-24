@@ -124,18 +124,15 @@ async function fetchCalculation() {
       body: JSON.stringify(payload),
     })
     if (!res.ok) {
-      console.error('!res.ok: Error response from server:', res.status, await res.text())
       throw new Error(`HTTP ${res.status}`)
     }
     const data = await res.json()
     if (data.error) {
-      console.error('API error:', data.error)
       throw new Error(data.error)
     }
     expression.value = data.data.solution
     await reloadTickerData()
   } catch (err) {
-    console.error('Error block: Error fetching calculation:', err)
     error.value = err.message
   } finally {
     loading.value = false
