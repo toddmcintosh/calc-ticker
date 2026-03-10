@@ -4,6 +4,8 @@ Demo created for a job application with a prospective employer. Direction given 
 
 This was an interesting project because it required implementing the [Shunting Yard](https://en.wikipedia.org/wiki/Shunting_yard_algorithm) algorithm, along with [Reverse Polish Notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation) in order to process the nested expressions.
 
+In addition, expressions with the answers from past calculations had to be stored on the backend, and displayed in a ticker format on the frontend, with the ability to select one of the expressions and delete it, updating the ticker values. These feature were faciliated throught the backend api. Data was stored in an SqlLite file.
+
 
 
 ### SETUP STEPS
